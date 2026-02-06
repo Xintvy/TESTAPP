@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivité</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-button">← Retour</a>
+        
+        <h1>Productivité</h1>
+        
+        <!-- Formulaire pour aujourd'hui -->
+        <div class="productivity-form">
+            <h2>{{ today.strftime('%A %d %B %Y') }}</h2>
+            
+            <form method="POST" action="/productivity/save">
+                <input type="hidden" name="prod_date" value="{{ today }}">
+                
+                <label>Note sur 10</label>
+                <input type="number" name="score" min="0" max="10" step="0.5" 
+                       value="{{ prod.score if prod else '' }}" required>
+                
+                <label>Commentaire</label>
+                <textarea name="note" rows="4" placeholder="Qu'est-ce qui s'est bien passé ? Qu'est-ce qui a merdé ?">{{ prod.note if prod else '' }}</textarea>
+                
+                <button type="submit">Sauvegarder</button>
+            </form>
+        </div>
+        
+        <!-- Historique -->
+        <div class="productivity-history">
+            <h2>Historique</h2>
+            
+            {% if history %}
+                {% for entry in history %}
+                <div class="history-entry">
+                    <div class="history-header">
+                        <strong>{{ entry.date.strftime('%A %d/%m/%Y') }}</strong>
+                        <span class="score-badge">{{ entry.score }}/10</span>
+                    </div>
+                    {% if entry.note %}
+                    <p class="history-note">{{ entry.note }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty">Aucun historique</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

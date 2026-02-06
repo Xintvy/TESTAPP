@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivité</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ today.strftime('%A %d %B %Y') }}</h1>
+        
+        <div class="button-grid">
+            <a href="/routine" class="big-button">ROUTINE</a>
+            <a href="/reasons" class="big-button">MY REASONS</a>
+            <a href="/objectives" class="big-button">MY MAIN OBJECTIVES</a>
+            <a href="/plan" class="big-button">PLANIFIER</a>
+            <a href="/sobriety" class="big-button">SOBRIÉTÉ</a>
+            <a href="/productivity" class="big-button">PRODUCTIVITÉ</a>
+        </div>
+        
+        <div class="today-tasks">
+            <h2>Tâches d'aujourd'hui</h2>
+            {% if tasks %}
+                {% for task in tasks %}
+                <div class="task-preview {% if task.done %}done{% endif %}">
+                    <span>{{ task.title }}</span>
+                    {% if task.time %}<span class="time">{{ task.time }}</span>{% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty">Aucune tâche planifiée</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

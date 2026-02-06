@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reasons</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-button">← Retour</a>
+        
+        <h1>My Reasons</h1>
+        
+        <div class="reasons-list">
+            {% for reason in reasons %}
+            <div class="reason-item">
+                <p>{{ reason.text }}</p>
+                <form method="POST" action="/reasons/delete/{{ reason.id }}" style="display: inline;">
+                    <button type="submit" class="delete-btn">×</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <form method="POST" action="/reasons/add" class="add-form">
+            <textarea name="text" placeholder="Pourquoi tu fais tout ça ?" rows="3" required></textarea>
+            <button type="submit">Ajouter</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-button">← Retour</a>
+        
+        <div class="warning-banner">
+            DON'T BEDROT IT'S A WASTE OF TIME
+        </div>
+        
+        <h1>Routine du matin</h1>
+        
+        <div class="routine-list">
+            {% for item in routine %}
+            <form method="POST" action="/routine/toggle/{{ item.id }}" class="routine-item-form">
+                <div class="routine-item {% if item.done %}done{% endif %}" onclick="this.parentElement.submit()">
+                    <input type="checkbox" {% if item.done %}checked{% endif %} disabled>
+                    <span>{{ item.item_name }}</span>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

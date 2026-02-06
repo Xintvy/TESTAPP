@@ -1,0 +1,693 @@
+/* ========== RESET & BASE ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0d0d0d;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ========== CONTAINER ========== */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #fff;
+    text-align: center;
+}
+
+h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 25px 0 15px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 15px 0 10px;
+    color: #ccc;
+}
+
+/* ========== NAVIGATION ========== */
+.back-button {
+    display: inline-block;
+    color: #888;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #fff;
+}
+
+/* ========== BUTTONS ========== */
+.button-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.big-button {
+    background: #1a1a1a;
+    color: #fff;
+    text-decoration: none;
+    padding: 25px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    border: 2px solid #2a2a2a;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.big-button:hover {
+    background: #252525;
+    border-color: #3a3a3a;
+    transform: translateY(-2px);
+}
+
+button, input[type="submit"] {
+    background: #2a2a2a;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+button:hover, input[type="submit"]:hover {
+    background: #3a3a3a;
+}
+
+.delete-btn {
+    background: #4a1a1a;
+    color: #ff6b6b;
+    padding: 5px 12px;
+    width: auto;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.delete-btn:hover {
+    background: #6a1a1a;
+}
+
+/* ========== FORMS ========== */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea {
+    width: 100%;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    color: #e0e0e0;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-bottom: 12px;
+    font-family: inherit;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #3a3a3a;
+    background: #222;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+label {
+    display: block;
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ========== CHECKBOXES ========== */
+input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    accent-color: #4a4a4a;
+}
+
+/* ========== ROUTINE ========== */
+.warning-banner {
+    background: #2a1a1a;
+    color: #ff6b6b;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    border: 2px solid #4a1a1a;
+}
+
+.routine-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.routine-item-form {
+    margin: 0;
+}
+
+.routine-item {
+    background: #1a1a1a;
+    padding: 18px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid #2a2a2a;
+}
+
+.routine-item:hover {
+    background: #222;
+    border-color: #3a3a3a;
+}
+
+.routine-item.done {
+    opacity: 0.4;
+    background: #151515;
+}
+
+.routine-item span {
+    font-size: 16px;
+}
+
+/* ========== REASONS ========== */
+.reasons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.reason-item {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #2a2a2a;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 15px;
+}
+
+.reason-item p {
+    flex: 1;
+    line-height: 1.6;
+    color: #ccc;
+}
+
+.add-form {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #2a2a2a;
+}
+
+/* ========== TASKS ========== */
+.today-tasks {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #2a2a2a;
+    margin-top: 30px;
+}
+
+.task-preview {
+    background: #0d0d0d;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-preview.done {
+    opacity: 0.4;
+    text-decoration: line-through;
+}
+
+.time {
+    color: #666;
+    font-size: 14px;
+}
+
+.empty {
+    color: #666;
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* ========== PLANNING ========== */
+.week-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.day-card {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #2a2a2a;
+}
+
+.day-card.today {
+    border-color: #4a4a4a;
+    background: #1f1f1f;
+}
+
+.day-card.planning-day {
+    border-color: #3a3a1a;
+    background: #1a1a15;
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.day-header strong {
+    font-size: 16px;
+    color: #fff;
+}
+
+.badge {
+    background: #3a3a1a;
+    color: #d4d47a;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.day-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.mini-task {
+    background: #0d0d0d;
+    padding: 10px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mini-task:hover {
+    background: #151515;
+}
+
+.mini-task.done {
+    opacity: 0.3;
+}
+
+.mini-task input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+details {
+    margin-top: 10px;
+}
+
+summary {
+    color: #888;
+    cursor: pointer;
+    padding: 8px 0;
+    font-size: 14px;
+    user-select: none;
+}
+
+summary:hover {
+    color: #aaa;
+}
+
+.quick-add {
+    background: #0d0d0d;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.quick-add input,
+.quick-add button {
+    margin-bottom: 8px;
+}
+
+/* ========== SOBRIETY ========== */
+.inline-form {
+    display: flex;
+    gap: 10px;
+    align-items: end;
+    margin-bottom: 20px;
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #2a2a2a;
+}
+
+.inline-form input {
+    margin-bottom: 0;
+}
+
+.inline-form button {
+    width: auto;
+    padding: 12px 20px;
+}
+
+.substance-block {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #2a2a2a;
+    margin-bottom: 20px;
+}
+
+.consumption-history {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.consumption-entry {
+    background: #0d0d0d;
+    padding: 12px 15px;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.consumption-entry .date {
+    color: #666;
+    font-weight: 500;
+    min-width: 60px;
+}
+
+.consumption-entry .qty {
+    color: #aaa;
+}
+
+.consumption-entry .note {
+    color: #888;
+    font-style: italic;
+}
+
+.consumption-form {
+    background: #0d0d0d;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* ========== PRODUCTIVITY ========== */
+.date {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.productivity-form {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #2a2a2a;
+    margin-bottom: 40px;
+}
+
+.productivity-form h2 {
+    margin-top: 0;
+    color: #fff;
+    text-align: center;
+    text-transform: none;
+}
+
+.productivity-form label {
+    margin-top: 15px;
+}
+
+.productivity-form label:first-of-type {
+    margin-top: 0;
+}
+
+.productivity-history {
+    margin-top: 40px;
+}
+
+.history-entry {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #2a2a2a;
+    margin-bottom: 15px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.score-badge {
+    background: #2a4a2a;
+    color: #4a7a4a;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.history-note {
+    color: #aaa;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ========== OBJECTIVES ========== */
+.objective-card {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #2a2a2a;
+    margin-bottom: 25px;
+}
+
+.objective-card h2 {
+    margin-top: 0;
+    color: #fff;
+    font-size: 20px;
+}
+
+.objective-desc {
+    color: #999;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.progress-bar {
+    background: #0d0d0d;
+    height: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #2a4a2a, #4a7a4a);
+    height: 100%;
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.progress-text {
+    color: #4a7a4a;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.objective-form {
+    background: #0d0d0d;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.sub-objective {
+    background: #0d0d0d;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.sub-objective h3 {
+    margin-top: 0;
+}
+
+.stats {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.sleep-status {
+    color: #aaa;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+/* ========== RANGE INPUTS ========== */
+input[type="range"] {
+    width: 100%;
+    height: 8px;
+    background: #2a2a2a;
+    border-radius: 5px;
+    outline: none;
+    -webkit-appearance: none;
+    margin-bottom: 10px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #4a7a4a;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #4a7a4a;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+}
+
+output {
+    display: inline-block;
+    background: #2a2a2a;
+    padding: 5px 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+/* ========== CHECKLIST (immigration) ========== */
+.checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.checklist-item {
+    background: #0d0d0d;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.checklist-item:hover {
+    background: #151515;
+}
+
+.checklist-item.done {
+    opacity: 0.4;
+}
+
+.checklist-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+.add-step-details {
+    margin-top: 15px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (min-width: 600px) {
+    .button-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .inline-form {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 900px) {
+    .week-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

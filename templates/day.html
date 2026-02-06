@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ day.date.strftime('%A %d %B') }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 16px;
+            margin: 30px 0 15px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .routine-item, .task-item {
+            background: #252525;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .routine-item.done, .task-item.done {
+            opacity: 0.5;
+        }
+        
+        input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+        
+        .task-content {
+            flex: 1;
+        }
+        
+        .task-title {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .task-meta {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .routine-percent {
+            font-size: 14px;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+        
+        form {
+            background: #252525;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        input[type="text"], textarea, input[type="number"] {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #e0e0e0;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .habit-item {
+            background: #252525;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .habit-days {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ day.date.strftime('%A %d %B %Y') }}</h1>
+    
+    <!-- ROUTINE DU MATIN -->
+    <div class="section">
+        <h2>Routine du matin</h2>
+        <div class="routine-percent">{{ routine_percent }}% complété</div>
+        
+        {% for item in routine %}
+        <form method="POST" action="/routine/toggle/{{ item.id }}">
+            <div class="routine-item {% if item.done %}done{% endif %}">
+                <input type="checkbox" {% if item.done %}checked{% endif %} onchange="this.form.submit()">
+                <span>{{ item.item_name }}</span>
+            </div>
+        </form>
+        {% endfor %}
+    </div>
+    
+    <!-- TÂCHES DU JOUR -->
+    <div class="section">
+        <h2>Tâches du jour</h2>
+        
+        {% for task in tasks %}
+        <form method="POST" action="/task/toggle/{{ task.id }}">
+            <div class="task-item {% if task.done %}done{% endif %}">
+                <input type="checkbox" {% if task.done %}checked{% endif %} onchange="this.form.submit()">
+                <div class="task-content">
+                    <div class="task-title">{{ task.title }}</div>
+                    <div class="task-meta">
+                        {% if task.time %}{{ task.time }} • {% endif %}
+                        {% if task.reason %}{{ task.reason }}{% endif %}
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% endfor %}
+        
+        <!-- Formulaire ajout tâche -->
+        <form method="POST" action="/task/add">
+            <input type="hidden" name="day_date" value="{{ day_date }}">
+            <input type="text" name="title" placeholder="Titre de la tâche" required>
+            <input type="text" name="time" placeholder="Heure (optionnel)">
+            <textarea name="reason" placeholder="Pourquoi je fais ça ? (optionnel)" rows="2"></textarea>
+            <button type="submit">Ajouter</button>
+        </form>
+    </div>
+    
+    <!-- PRODUCTIVITÉ -->
+    <div class="section">
+        <h2>Productivité du jour</h2>
+        <form method="POST" action="/day/save">
+            <input type="hidden" name="day_date" value="{{ day_date }}">
+            <input type="number" name="score" min="0" max="10" step="0.5" 
+                   placeholder="Note /10" value="{{ day.productivity_score or '' }}">
+            <textarea name="note" placeholder="Commentaire (optionnel)" rows="3">{{ day.note or '' }}</textarea>
+            <button type="submit">Sauvegarder</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Objectifs</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-button">← Retour</a>
+        
+        <h1>My Main Objectives</h1>
+        
+        <!-- OBJECTIF 1 : ÉTUDES -->
+        <div class="objective-card">
+            <h2>🎓 ÉTUDES</h2>
+            <p class="objective-desc">Cartonner les 2 derniers semestres de Master 1</p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ objectives.studies_progress }}%"></div>
+            </div>
+            <p class="progress-text">{{ objectives.studies_progress }}%</p>
+            
+            <form method="POST" action="/objectives/update" class="objective-form">
+                <input type="hidden" name="objective_type" value="studies">
+                <label>Progrès (%)</label>
+                <input type="range" name="progress" min="0" max="100" value="{{ objectives.studies_progress }}" 
+                       oninput="this.nextElementSibling.value = this.value">
+                <output>{{ objectives.studies_progress }}</output>
+                
+                <label>Notes / Réflexions</label>
+                <textarea name="notes" rows="3">{{ objectives.studies_notes or '' }}</textarea>
+                
+                <button type="submit">Mettre à jour</button>
+            </form>
+        </div>
+        
+        <!-- OBJECTIF 2 : HYGIÈNE DE VIE -->
+        <div class="objective-card">
+            <h2>💪 HYGIÈNE DE VIE</h2>
+            
+            <!-- Poids -->
+            <div class="sub-objective">
+                <h3>Perte de poids</h3>
+                <p class="stats">Objectif : 70 kg | Actuel : {{ objectives.current_weight }} kg</p>
+                <div class="progress-bar">
+                    {% set weight_lost = 87 - objectives.current_weight %}
+                    {% set total_to_lose = 87 - 70 %}
+                    {% set weight_progress = ((weight_lost / total_to_lose) * 100) | int %}
+                    <div class="progress-fill" style="width: {{ weight_progress }}%"></div>
+                </div>
+                <p class="progress-text">{{ weight_progress }}%</p>
+                
+                <form method="POST" action="/objectives/update" class="inline-form">
+                    <input type="hidden" name="objective_type" value="weight">
+                    <label>Poids actuel (kg)</label>
+                    <input type="number" name="current_weight" step="0.1" value="{{ objectives.current_weight }}" required>
+                    <button type="submit">OK</button>
+                </form>
+            </div>
+            
+            <!-- Sommeil -->
+            <div class="sub-objective">
+                <h3>Sommeil</h3>
+                <p class="stats">Objectif : 9h minimum</p>
+                
+                <form method="POST" action="/objectives/update" class="inline-form">
+                    <input type="hidden" name="objective_type" value="sleep">
+                    <label>Heures dormies hier</label>
+                    <input type="number" name="sleep_hours" step="0.5" value="{{ objectives.sleep_hours or '' }}" required>
+                    <button type="submit">OK</button>
+                </form>
+                
+                {% if objectives.sleep_hours %}
+                <p class="sleep-status">
+                    {% if objectives.sleep_hours >= 9 %}✅ Objectif atteint{% else %}⚠️ Manque {{ 9 - objectives.sleep_hours }}h{% endif %}
+                </p>
+                {% endif %}
+            </div>
+            
+            <!-- Alimentation -->
+            <div class="sub-objective">
+                <h3>Alimentation</h3>
+                
+                <form method="POST" action="/objectives/update" class="inline-form">
+                    <input type="hidden" name="objective_type" value="food">
+                    <label>Satisfaction (/10)</label>
+                    <input type="range" name="food_satisfaction" min="0" max="10" value="{{ objectives.food_satisfaction }}" 
+                           oninput="this.nextElementSibling.value = this.value">
+                    <output>{{ objectives.food_satisfaction }}</output>
+                    <button type="submit">OK</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- OBJECTIF 3 : IMMIGRATION -->
+        <div class="objective-card">
+            <h2>🇨🇦 ME BARRER D'ALGÉRIE</h2>
+            <p class="objective-desc">Immigration Canada</p>
+            
+            <div class="checklist">
+                {% for step in immigration_steps %}
+                <form method="POST" action="/objectives/toggle_step/{{ step.id }}">
+                    <div class="checklist-item {% if step.done %}done{% endif %}" onclick="this.parentElement.submit()">
+                        <input type="checkbox" {% if step.done %}checked{% endif %} disabled>
+                        <span>{{ step.title }}</span>
+                    </div>
+                </form>
+                {% endfor %}
+            </div>
+            
+            <details class="add-step-details">
+                <summary>+ Ajouter étape</summary>
+                <form method="POST" action="/objectives/add_step" class="quick-add">
+                    <input type="text" name="title" placeholder="Nouvelle étape" required>
+                    <button type="submit">Ajouter</button>
+                </form>
+            </details>
+        </div>
+    </div>
+</body>
+</html>

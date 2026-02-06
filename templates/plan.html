@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planifier</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-button">← Retour</a>
+        
+        <h1>Planifier la semaine</h1>
+        
+        {% set day_names = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'] %}
+        
+        <div class="week-grid">
+            {% for day in week %}
+            <div class="day-card {% if day == today %}today{% endif %} {% if day.weekday() == 4 %}planning-day{% endif %}">
+                <div class="day-header">
+                    <strong>{{ day_names[day.weekday()] }}</strong>
+                    <span>{{ day.strftime('%d/%m') }}</span>
+                    {% if day.weekday() == 4 %}<span class="badge">Planning</span>{% endif %}
+                </div>
+                
+                <div class="day-tasks">
+                    {% for task in week_tasks[day] %}
+                    <form method="POST" action="/plan/toggle/{{ task.id }}">
+                        <div class="mini-task {% if task.done %}done{% endif %}" onclick="this.parentElement.submit()">
+                            <input type="checkbox" {% if task.done %}checked{% endif %} disabled>
+                            <span>{{ task.title }}</span>
+                            {% if task.time %}<span class="time">{{ task.time }}</span>{% endif %}
+                        </div>
+                    </form>
+                    {% endfor %}
+                </div>
+                
+                <details class="add-task-details">
+                    <summary>+ Ajouter</summary>
+                    <form method="POST" action="/plan/add" class="quick-add">
+                        <input type="hidden" name="task_date" value="{{ day }}">
+                        <input type="text" name="title" placeholder="Tâche" required>
+                        <input type="text" name="time" placeholder="Heure (opt)">
+                        <button type="submit">OK</button>
+                    </form>
+                </details>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
