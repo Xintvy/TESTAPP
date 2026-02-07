@@ -13,34 +13,63 @@
 <body>
     <div class="container">
         <a href="/" class="back-button">← Retour</a>
-
+        
         <h1>Sobriété</h1>
-
+        
+        <!-- Ajouter substance -->
         <form method="POST" action="/sobriety/add_substance" class="inline-form">
             <input type="text" name="name" placeholder="Nouvelle substance" required>
             <button type="submit">Ajouter</button>
         </form>
-
+        
+        <!-- Liste substances -->
         {% for sub in substances %}
         <div class="substance-block">
             <div class="substance-header">
                 <h2>{{ sub.name }}</h2>
-                <form method="POST" action="/sobriety/delete_substance/{{ sub.id }}">
+                <form method="POST" action="/sobriety/delete_substance/{{ sub.id }}" style="display: inline;">
                     <button type="submit" class="delete-btn-small">× Supprimer</button>
                 </form>
             </div>
-
+            
+            <!-- Historique -->
             <div class="consumption-history">
                 {% if consumptions[sub.id] %}
                     {% for cons in consumptions[sub.id] %}
                     <div class="consumption-entry">
-                        <span>{{ cons.date.strftime('%d/%m') }}</span>
-                        {% if cons.quantity %}<span>{{ cons.quantity }}</span>{% endif %}
-                        {% if cons.note %}<span>{{ cons.note }}</span>{% endif %}
-                        <form method="POST" action="/sobriety/delete_consumption/{{ cons.id }}">
-                            <button type="submit">×</button>
+                        <span class="date">{{ cons.date.strftime('%d/%m') }}</span>
+                        {% if cons.quantity %}<span class="qty">{{ cons.quantity }}</span>{% endif %}
+                        {% if cons.note %}<span class="note">{{ cons.note }}</span>{% endif %}
+                        <form method="POST" action="/sobriety/delete_consumption/{{ cons.id }}" style="display: inline;">
+                            <button type="submit" class="delete-consumption-btn">×</button>
                         </form>
                     </div>
                     {% endfor %}
                 {% else %}
                     <p class="empty">Aucune consommation enregistrée</p>
+                {% endif %}
+            </div>
+            
+            <!-- Ajouter consommation -->
+            <details class="add-consumption-details">
+                <summary>+ Ajouter consommation</summary>
+                <form method="POST" action="/sobriety/add_consumption" class="consumption-form">
+                    <input type="hidden" name="substance_id" value="{{ sub.id }}">
+                    <input type="date" name="consumption_date" value="{{ today }}" required>
+                    <input type="text" name="quantity" placeholder="Quantité (opt)">
+                    <textarea name="note" placeholder="Note (opt)" rows="2"></textarea>
+                    <button type="submit">Enregistrer</button>
+                </form>
+            </details>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- PWA -->
+    <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/static/sw.js");
+    }
+    </script>
+</body>
+</html>
